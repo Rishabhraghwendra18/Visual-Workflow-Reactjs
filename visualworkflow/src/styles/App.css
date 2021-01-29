@@ -3,5 +3,6 @@
   display: grid;
   -ms-grid-columns: 25% auto;
       grid-template-columns: 25% auto;
+  height: 100%;
 }
 /*# sourceMappingURL=App.css.map */

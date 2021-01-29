@@ -1,0 +1,30 @@
+.workflow{
+      border: 1px solid grey;
+      .title{
+            text-align: center;
+            padding: 7%;
+            border: 1px solid grey;
+            margin-bottom: 37px;
+      }
+      .form{
+            // height: 100%;
+            display: flex;
+            flex-direction: column;
+            label{
+                  display: block;
+                  margin: 12px;
+            }
+            div{
+                  margin-left: 8px;
+            }
+            .functions{
+                  border: 1px solid grey;
+                  position: fixed;
+                  width: 24.8%;
+                  bottom: 0;
+                  margin: 0;
+                  padding-top: 3%;
+                  padding-bottom: 2%;
+            }
+      }
+}

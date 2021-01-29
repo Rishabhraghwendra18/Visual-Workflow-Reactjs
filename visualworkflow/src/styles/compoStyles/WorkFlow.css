@@ -1,1 +1,40 @@
-/* No CSS *//*# sourceMappingURL=WorkFlow.css.map */
+.workflow {
+  border: 1px solid grey;
+}
+
+.workflow .title {
+  text-align: center;
+  padding: 7%;
+  border: 1px solid grey;
+  margin-bottom: 37px;
+}
+
+.workflow .form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.workflow .form label {
+  display: block;
+  margin: 12px;
+}
+
+.workflow .form div {
+  margin-left: 8px;
+}
+
+.workflow .form .functions {
+  border: 1px solid grey;
+  position: fixed;
+  width: 24.8%;
+  bottom: 0;
+  margin: 0;
+  padding-top: 3%;
+  padding-bottom: 2%;
+}
+/*# sourceMappingURL=WorkFlow.css.map */
