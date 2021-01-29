@@ -1,9 +1,9 @@
 import './styles/App.css';
-
+import WorkFlow from './components/WorkFlow';
 function App() {
   return (
     <div className="App">
-      <h1>Hello</h1>      
+      <WorkFlow/>      
     </div>
   );
 }
