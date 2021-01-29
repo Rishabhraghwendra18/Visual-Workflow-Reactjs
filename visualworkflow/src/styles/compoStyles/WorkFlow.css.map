@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAA;EACH,KAAK,EAAE,GAAG;CACf",
+    "mappings": "",
     "sources": [
         "WorkFlow.scss"
     ],
