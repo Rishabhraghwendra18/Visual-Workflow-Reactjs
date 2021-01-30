@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAA;EACP,MAAM,EAAE,cAAc;CAC3B",
+    "sources": [
+        "PaletteDiv.scss"
+    ],
+    "names": [],
+    "file": "PaletteDiv.css"
+}

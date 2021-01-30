@@ -14,17 +14,17 @@
                   display: block;
                   margin: 12px;
             }
-            div{
+            .inputs{
                   margin-left: 8px;
             }
             .functions{
                   border: 1px solid grey;
                   position: fixed;
-                  width: 24.8%;
+                  width: 22.6%;
                   bottom: 0;
-                  margin: 0;
-                  padding-top: 3%;
-                  padding-bottom: 2%;
+                  padding: 3% 21px 2%;
+                  // padding-top: 3%;
+                  // padding-bottom: 2%;
             }
       }
 }

@@ -1,53 +1,94 @@
 import React from 'react';
 import '../styles/compoStyles/WorkFlow.css';
-import { TextField, Select, MenuItem, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { FormControl, NativeSelect, TextField, Button,InputBase } from '@material-ui/core';
+import { makeStyles,withStyles } from '@material-ui/core/styles';
 function WorkFlow() {
-      const styles = {
+
+      const BootstrapInput = withStyles((theme) => ({
             root: {
-                  float: "left",
-                  margin:"auto"
+                  'label + &': {
+                        marginTop: theme.spacing(3),
+                  },
             },
-            cancel: {
-                  float: "right",
-                  margin:"auto"
+            input: {
+                  borderRadius: 4,
+                  position: 'relative',
+                  backgroundColor: theme.palette.background.paper,
+                  border: '1px solid #ced4da',
+                  fontSize: 16,
+                  padding: '10px 26px 10px 12px',
+                  transition: theme.transitions.create(['border-color', 'box-shadow']),
+                  // Use the system font instead of the default Roboto font.
+                  fontFamily: [
+                        '-apple-system',
+                        'BlinkMacSystemFont',
+                        '"Segoe UI"',
+                        'Roboto',
+                        '"Helvetica Neue"',
+                        'Arial',
+                        'sans-serif',
+                        '"Apple Color Emoji"',
+                        '"Segoe UI Emoji"',
+                        '"Segoe UI Symbol"',
+                  ].join(','),
+                  '&:focus': {
+                        borderRadius: 4,
+                        borderColor: '#80bdff',
+                        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+                  },
+            },
+      }))(InputBase);
+      const useStyles = makeStyles((theme) => ({
+            margin: {
+              margin: theme.spacing(1),
+              width:"88%"
+            }
+          }));
+
+      const styles = {
+            saveb: {
+                  float: "left",
+                  margin: "auto"
+            },
+            cancelb: {
+                  float: "right"
+            },
+            inputfield: {
+                  width: "90%"
             }
       }
-      const useStyles = makeStyles(styles);
       const classes = useStyles();
+      const useStyle = makeStyles(styles);
+      const css = useStyle();
       return (
             <div className="workflow">
                   <div className="title">
-                        <h1>It's workflow</h1>
+                        <h1>Workflow</h1>
                   </div>
                   <div className="form">
-                        <div>
+                        <div className="inputs">
                               <label >WorkFlow Name</label>
-                              {/* <input type="text" name="nam" id="nn"/> */}
-                              <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                              <TextField id="outlined-basic" className={css.inputfield} variant="outlined" />
                               <label >Trigger</label>
-                              {/* <input type="text" name="nam" id="nn"/> */}
-                              <Select
-                                    labelId="demo-simple-select-outlined-label"
-                                    id="demo-simple-select-outlined"
-                                    value={"age"}
-                                    onChange={"handleChange"}
-                                    label="Age"
-                              >
-                                    <MenuItem value="">
-                                          <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
-                              </Select>
+                              <FormControl className={classes.margin}>
+                                    <NativeSelect
+                                          id="demo-customized-select-native"
+                                          value={"age"}
+                                          onChange={"handleChange"}
+                                          input={<BootstrapInput />}
+                                    >
+                                          <option aria-label="None" value="Select" >Select</option>
+                                          <option value={10}>When a subscriber joins a list</option>
+                                          <option value={20}>The anniversary of a date</option>
+                                    </NativeSelect>
+                              </FormControl>
                         </div>
 
                         <div className="functions">
-                              <Button variant="contained" id="save_button" color="primary" className={classes.root}>
+                              <Button variant="contained" id="save_button" color="primary" className={css.saveb}>
                                     Save
                         </Button>
-                              <Button variant="contained" id="cancel_button" color="primary" className={classes.cancel}>
+                              <Button variant="contained" id="cancel_button" color="primary" className={css.cancelb}>
                                     Cancel
                         </Button>
                         </div>

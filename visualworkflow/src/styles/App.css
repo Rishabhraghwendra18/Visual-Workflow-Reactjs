@@ -1,8 +1,8 @@
 .App {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 25% auto;
-      grid-template-columns: 25% auto;
+  -ms-grid-columns: 25% auto 20%;
+      grid-template-columns: 25% auto 20%;
   height: 100%;
 }
 /*# sourceMappingURL=App.css.map */
