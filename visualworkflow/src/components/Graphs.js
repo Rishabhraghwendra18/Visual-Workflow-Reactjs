@@ -1,55 +1,46 @@
-import React from 'react';
-import '../styles/compoStyles/Graphs.css';
-import * as go from 'gojs';
-import { ReactDiagram } from 'gojs-react';
-var myDiagram=null;
-function initDiagram() {
-  const $ = go.GraphObject.make;
-  // set your license key here before creating the diagram: go.Diagram.licenseKey = "...";
-  const diagram =
-    $(go.Diagram,
-      {
-        'undoManager.isEnabled': true,  // must be set to allow for model change listening
-        // 'undoManager.maxHistoryLength': 0,  // uncomment disable undo/redo functionality
-        'clickCreatingTool.archetypeNodeData': { text: 'new node', color: 'lightblue' },
-        model: $(go.GraphLinksModel,
-          {
-            linkKeyProperty: 'key'  // IMPORTANT! must be defined for merges and data sync when using GraphLinksModel
-          })
-      });
-
-  // define a simple Node template
-  diagram.nodeTemplate =
-    $(go.Node, 'Auto',  // the Shape will go around the TextBlock
-      new go.Binding('location', 'loc', go.Point.parse).makeTwoWay(go.Point.stringify),
-      $(go.Shape, 'RoundedRectangle',
-        { name: 'SHAPE', fill: 'white', strokeWidth: 0 },
-        // Shape.fill is bound to Node.data.color
-        new go.Binding('fill', 'color')),
-      $(go.TextBlock,
-        { margin: 8, editable: true },  // some room around the text
-        new go.Binding('text').makeTwoWay()
-      )
-    );
-    diagram.layout = $(go.TreeLayout, { angle: 90 });
-  return diagram;
-}
+import React, { useState } from 'react';
+import ReactFlow, { Controls, updateEdge, addEdge } from 'react-flow-renderer';
+const initialElements = [
+  {
+    id: '1',
+    type: 'input',
+    data: { label: 'Node A' },
+    position: { x: 250, y: 0 },
+  },
+  {
+    id: '2',
+    data: { label: 'Node B' },
+    position: { x: 100, y: 200 },
+  },
+  {
+    id: '4',
+    data: { label: 'FFF' },
+    position: { x: 100, y: 300 }
+  },
+  {
+    id: '3',
+    data: { label: 'Node C' },
+    position: { x: 400, y: 200 },
+  },
+  { id: 'e1-2', source: '1', target: '2', label: 'Yes',animated:true },
+];
+const onLoad = (reactFlowInstance) => reactFlowInstance.fitView();
 export default function Graphs() {
+  const [elements, setElements] = useState(initialElements);
+  // gets called after end of edge gets dragged to another source or target
+  const onEdgeUpdate = (oldEdge, newConnection) =>
+    setElements((els) => updateEdge(oldEdge, newConnection, els));
+  const onConnect = (params) => setElements((els) => addEdge(params, els));
   return (
-    <ReactDiagram
-    initDiagram={initDiagram}
-    divClassName='diagram-component'
-    nodeDataArray={[
-      { key: 0, text: 'Alpha', color: 'lightblue', loc: '0 0' },
-      { key: 1, text: 'Beta', color: 'orange', loc: '150 0' },
-      { key: 2, text: 'Gamma', color: 'lightgreen', loc: '0 150' },
-      { key: 3, text: 'Delta', color: 'pink', loc: '150 150' },
-    ]}
-    linkDataArray={[
-      { key: -1, from: 0, to: 1 },
-      { key: -2, from: 0, to: 2 },
-      { key: -4, from: 2, to: 3 },
-    ]}
-  />
-  );
+    <ReactFlow
+      elements={elements}
+      onLoad={onLoad}
+      snapToGrid
+      onEdgeUpdate={onEdgeUpdate}
+      onConnect={onConnect}
+      onClick={(e)=>console.log(e.target.getAttribute("data-id"))} //to get data-id
+    >
+      <Controls />
+    </ReactFlow>
+  )
 }
