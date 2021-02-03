@@ -1,46 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../styles/compoStyles/PaletteDiv.css';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { FormControl, NativeSelect, TextField, Button, InputBase } from '@material-ui/core';
-function PaletteDiv() {
-      const BootstrapInput = withStyles((theme) => ({
-            root: {
-                  'label + &': {
-                        marginTop: theme.spacing(3),
-                  },
-            },
-            input: {
-                  borderRadius: 4,
-                  position: 'relative',
-                  backgroundColor: theme.palette.background.paper,
-                  border: '1px solid #ced4da',
-                  fontSize: 16,
-                  padding: '10px 26px 10px 12px',
-                  transition: theme.transitions.create(['border-color', 'box-shadow']),
-                  // Use the system font instead of the default Roboto font.
-                  fontFamily: [
-                        '-apple-system',
-                        'BlinkMacSystemFont',
-                        '"Segoe UI"',
-                        'Roboto',
-                        '"Helvetica Neue"',
-                        'Arial',
-                        'sans-serif',
-                        '"Apple Color Emoji"',
-                        '"Segoe UI Emoji"',
-                        '"Segoe UI Symbol"',
-                  ].join(','),
-                  '&:focus': {
-                        borderRadius: 4,
-                        borderColor: '#80bdff',
-                        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-                  },
-            },
-      }))(InputBase);
+import { makeStyles } from '@material-ui/core/styles';
+import { FormControl, TextField, InputLabel, Select, MenuItem, Button } from '@material-ui/core';
+import {  connect } from 'react-redux';
+import input from '../actions/input';
+function PaletteDiv(props) {
+      const [nodename, setNodename] = useState();
+      const [nodetype, setNodetype] = useState();
+      const [nodevalue, setNodevalue] = React.useState('');
+
+      const handleChange = (event) => {
+            setNodevalue(event.target.value);
+            setNodetype(event.target.value);
+      };
+
       const useStyles = makeStyles((theme) => ({
             margin: {
                   margin: theme.spacing(1),
                   width: "88%"
+            },
+            formControl: {
+                  margin: theme.spacing(1),
+                  minWidth: 120,
+            },
+            selectEmpty: {
+                  marginTop: theme.spacing(2),
             }
       }));
 
@@ -53,7 +37,9 @@ function PaletteDiv() {
                   float: "right"
             },
             inputfield: {
-                  width: "90%"
+                  display: "block",
+                  width: "100%",
+                  margin: "0"
             }
       }
       const classes = useStyles();
@@ -66,23 +52,48 @@ function PaletteDiv() {
                   </div>
                   <div className="palette">
                         <label >WorkFlow Name</label>
-                        <TextField id="outlined-basic" className={css.inputfield} variant="outlined" />
-                        <label >Trigger</label>
-                        <FormControl className={classes.margin}>
-                              <NativeSelect
-                                    id="demo-customized-select-native"
-                                    value={"age"}
-                                    onChange={"handleChange"}
-                                    input={<BootstrapInput />}
+                        <TextField id="outlined-basic" fullwidth className={css.inputfield} variant="outlined" onChange={e => setNodename(e.target.value)} />
+                        <label >Type of Node</label>
+                        <FormControl variant="outlined" className={classes.formControl}>
+                              <InputLabel id="demo-simple-select-outlined-label">Node</InputLabel>
+                              <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={nodevalue}
+                                    onChange={handleChange}
+                                    label="Age"
                               >
-                                    <option aria-label="None" value="Select" >Select</option>
-                                    <option value={10}>When a subscriber joins a list</option>
-                                    <option value={20}>The anniversary of a date</option>
-                              </NativeSelect>
+                                    <MenuItem value="">
+                                          <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>Step</MenuItem>
+                                    <MenuItem value={20}>Condition</MenuItem>
+                              </Select>
+                              <Button variant="contained" color="primary" onClick={(e) => {
+                                    e.preventDefault();
+                                    const node = {
+                                          NodeType: nodetype,
+                                          NodeValue: nodename
+                                    }
+                                    props.nodedispatch(node)
+                                    console.log("done dispatching")
+                              }}>
+                                    Add Node
+                              </Button>
                         </FormControl>
                   </div>
             </div>
       )
 }
 
-export default PaletteDiv
+const mapStateToProps = state => {
+      return {
+            elements: state.nodeReducers
+      }
+}
+const mapDisptachToProps = dispatch => {
+      return {
+            nodedispatch: (node) => dispatch(input(node))
+      }
+}
+export default connect(mapStateToProps, mapDisptachToProps)(PaletteDiv);
